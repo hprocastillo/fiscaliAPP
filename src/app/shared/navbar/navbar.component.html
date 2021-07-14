@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-navbar">
+	<div class="container">
+		<div class="p-0 me-2">
+			<img src="../../../assets/images/navbar/logo.png" class="logo" alt="">
+		</div>
+		<div class="p-0 m-0">
+			<a class="navbar-brand p-0 m-0 navbar-title" routerLink="/dashboard">
+				DESPACHO FISCAL
+			</a>
+			<p class="p-0 m-0 navbar-subtitle">2° Despacho Provincial Penal de la 8° Fiscalía Corporativa Penal de
+				cercado de Lima-Breña-Rímac y Jesús María</p>
+		</div>
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+			<ul class="navbar-nav mb-2 mb-lg-0" *ngIf="authSvc.user$ | async as user">
+				<li class="nav-item">
+					<a class="nav-link" aria-current="page" routerLink="/dashboard">Inicio</a>
+				</li>
+
+				<li class="nav-item dropdown">
+					<div ngbDropdown class="d-inline-block">
+						<button class="btn nav-link" id="dropdownBasic1" ngbDropdownToggle>{{user.displayName}}
+							&nbsp;
+							<img src="{{ user.photoURL }}" alt="{{user.displayName}}" class="img-avatar">
+						</button>
+						<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+							<button ngbDropdownItem href="#">Configuración</button>
+							<button ngbDropdownItem (click)="logout()">Cerrar sesión</button>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+</nav>

@@ -1,0 +1,169 @@
+<ng-container *ngIf="user$ | async as user">
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover" id="fileTable">
+          <thead>
+          <tr>
+
+            <th>Plazo procesal</th>
+            <th>Fecha de apertura</th>
+            <th>Datos audiencia</th>
+            <th>Carpeta fiscal</th>
+
+            <th>Fiscal a cargo</th>
+            <th>Asistente fiscal</th>
+            <th>Expediente Judicial</th>
+            <th>Delito</th>
+            <th>Imputado</th>
+            <th>Agraviado</th>
+            <th>Etapa procesal</th>
+            <th>Juzgado</th>
+            <th>Estado del proceso</th>
+            <th>Actuación pendiente</th>
+            <th>Tipo de diligencia</th>
+            <th>Fecha de notificación</th>
+
+
+            <th>Documento adjunto</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- content filter -->
+          <ng-container *ngIf="searchText; else noFilter">
+            <tr *ngFor="let file of filterFiles | filterFile:searchText">
+
+              <td class="p-0">
+                <app-deadline [user]="user" [file]="file"></app-deadline>
+              </td>
+
+              <td>{{ file.openingDate.toDate() | date:'dd/MM/yy'}}</td>
+
+              <td>
+                <a type="button" href="#"
+                   (click)="showHearing(file.hearingDate.toDate(), file.hearingLink, file.prosecutor)"
+                   data-bs-toggle="modal" data-bs-target="#exampleModal">Ver</a>
+              </td>
+
+              <!-- <td>
+                <a href="{{ file.hearingLink}}" target="_blank">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-camera-video" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z"/>
+                  </svg>
+                </a>
+              </td> -->
+
+              <td>{{ file.fiscalFolder}}</td>
+              <td>{{ file.prosecutor}}</td>
+              <td>{{ file.assistantProsecutor}}</td>
+              <td>{{ file.fileNumber}}</td>
+              <td>{{ file.crime}}</td>
+              <td>{{ file.accused}}</td>
+              <td>{{ file.aggrieved}}</td>
+              <td>{{ file.proceduralStage}}</td>
+              <td>{{ file.court}}</td>
+              <td>{{ file.processStatus}}</td>
+              <td>{{ file.pendingAction}}</td>
+              <td>{{ file.typeDiligence}}</td>
+              <td>{{ file.dateNotification.toDate() | date: 'dd/MM/yy'}}</td>
+
+
+              <td>
+                <app-download-file [downloadUrl]="file.fileUrl"></app-download-file>
+              </td>
+            </tr>
+          </ng-container>
+
+          <!-- content without filter -->
+          <ng-template #noFilter>
+            <tr *ngFor="let file of filterFiles">
+
+              <td class="p-0">
+                <app-deadline [user]="user" [file]="file"></app-deadline>
+              </td>
+
+              <td>{{ file.openingDate.toDate() | date:'dd/MM/yy'}}</td>
+
+              <td>
+                <a type="button" href="#"
+                   (click)="showHearing(file.hearingDate.toDate(), file.hearingLink, file.prosecutor)"
+                   data-bs-toggle="modal" data-bs-target="#exampleModal">Ver</a>
+
+              </td>
+              <!-- <td>
+                <a href="{{ file.hearingLink}}" target="_blank">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-camera-video" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z"/>
+                  </svg>
+                </a>
+              </td> -->
+              <td>{{ file.fiscalFolder}}</td>
+              <td>{{ file.prosecutor}}</td>
+              <td>{{ file.assistantProsecutor}}</td>
+              <td>{{ file.fileNumber}}</td>
+              <td>{{ file.crime}}</td>
+              <td>{{ file.accused}}</td>
+              <td>{{ file.aggrieved}}</td>
+              <td>{{ file.proceduralStage}}</td>
+              <td>{{ file.court}}</td>
+              <td>{{ file.processStatus}}</td>
+              <td>{{ file.pendingAction}}</td>
+              <td>{{ file.typeDiligence}}</td>
+              <td>{{ file.dateNotification.toDate() | date: 'dd/MM/yy'}}</td>
+
+              <td>
+                <app-download-file [downloadUrl]="file.fileUrl"></app-download-file>
+              </td>
+            </tr>
+          </ng-template>
+
+
+          </tbody>
+        </table>
+
+        <!-- Modal Hearing -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Datos de la audiencia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <ng-container *ngIf="hearingDate">
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <p class="fw-bold">Fiscal a cargo:</p>
+                      <p class="fw-bold">Fecha y hora:</p>
+                      <p class="fw-bold">Link:</p>
+                    </div>
+                    <div class="col-md-8">
+                      <p>{{prosecutor}}</p>
+                      <p>{{hearingDate | date:'medium'}}</p>
+                      <a href="{{hearingLink}}" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                             class="bi bi-camera-video" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd"
+                                d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z"/>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-container>

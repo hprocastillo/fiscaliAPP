@@ -1,0 +1,31 @@
+<div class="calendar">
+
+  <div class="header">
+    <button (click)="changeMonth(-1)" class="btn btn-sm btn-outline-secondary btn-prev">Antes</button>
+    <h5 class="month">{{ dateSelect | date:'MMMM, yyyy'}}</h5>
+    <button (click)="changeMonth(1)" class="btn btn-sm btn-outline-secondary btn-next">Siguiente</button>
+  </div>
+
+  <ol>
+    <!-- List days -->
+    <li class="list-days" *ngFor="let day of week">{{ day | slice:0:3 }}</li>
+
+    <!-- List events -->
+    <li (click)="clickDay(day)" class="day" [style.gridColumnStart]="first? day?.indexWeek : 'auto'"
+        *ngFor="let day of monthSelect; let first = first">
+
+      <!-- Number Day - If is today the remark -->
+      <ng-container
+        *ngIf="day.value === today.getDate() && dateSelect.month() === today.getMonth() && dateSelect.year() === today.getFullYear(); else notToday">
+        <span class="today">{{day?.value }}</span>
+      </ng-container>
+      <!-- Number Day - If not today -->
+      <ng-template #notToday>
+        {{day?.value }}
+      </ng-template>
+
+      <!-- Event -->
+      <app-event [day]="day.value" [month]="dateSelect.month()" [year]="dateSelect.year()"></app-event>
+    </li>
+  </ol>
+</div>

@@ -1,0 +1,27 @@
+<ng-container *ngIf="event">
+  <ul>
+
+    <li *ngFor="let e of event">
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-basic-title">{{e.nameEvent}}</h5>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <a href="{{e.linkEvent}}" target="_blank">meet</a>
+        </div>
+      </ng-template>
+
+      <ng-container *ngIf="e.dateEvent.toDate() < today; else show">
+        <button class="btn btn-sm btn-secondary btn-block" (click)="open(content)">{{e.nameEvent}}</button>
+      </ng-container>
+      <ng-template #show>
+        <button class="btn btn-sm btn-success btn-block" (click)="open(content)">{{e.nameEvent}}</button>
+      </ng-template>
+    </li>
+
+  </ul>
+</ng-container>
+

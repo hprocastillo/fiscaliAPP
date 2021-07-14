@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fiscaliasystem": {
+      "hosting": {
+        "fiscaliaSystem": [
+          "fiscaliasystem"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fiscaliasystem"
+  }
+}

@@ -1,0 +1,20 @@
+<div class="container" *ngIf="authSvc.user$ | async as user">
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h5>Calendario de Actividades</h5>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <!-- Form - New event  -->
+    <div class="col-md-4">
+      <app-new-event [user]="user"></app-new-event>
+    </div>
+
+    <!-- Calendar - List events -->
+    <div class="col-md-8">
+      <app-list-events [user]="user"></app-list-events>
+    </div>
+  </div>
+
+</div>

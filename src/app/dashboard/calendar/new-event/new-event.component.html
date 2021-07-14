@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header">
+    Nuevo Evento
+  </div>
+  <div class="card-body">
+    <form [formGroup]="eventForm" (ngSubmit)="onSave(user.uid, user.displayName, user.email, user.photoURL)">
+      <div class="form-group">
+        <label for="nameEvent">Nombre del evento</label>
+        <input type="text" id="nameEvent" class="form-control form-control-sm" formControlName="nameEvent">
+      </div>
+      <div class="form-group">
+        <label for="linkEvent">Link de reunion</label>
+        <input type="text" id="linkEvent" class="form-control form-control-sm" formControlName="linkEvent">
+      </div>
+      <div class="form-group">
+        <label for="dateEvent">Fecha del evento</label>
+        <input type="date" id="dateEvent" class="form-control form-control-sm" formControlName="dateEvent">
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            <label for="startEvent">Hora de inicio</label>
+            <input type="time" id="startEvent" class="form-control form-control-sm" formControlName="startEvent">
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="endEvent">Hora de fin</label>
+            <input type="time" id="endEvent" class="form-control form-control-sm" formControlName="endEvent">
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+    </form>
+  </div>
+</div>

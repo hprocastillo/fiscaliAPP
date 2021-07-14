@@ -1,0 +1,171 @@
+<form [formGroup]="fileForm" (ngSubmit)="onSave(user.uid, user.displayName, user.email, user.photoURL)">
+  <ng-container *ngIf="saveSuccess === true">
+    <div class="alert alert-success alert-dismissible fade show" data-auto-dismiss role="alert">
+      Expediente registrado <strong>Exitosamente!</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </ng-container>
+  <div class="row">
+    <div class="col-md-3">
+      <h6 class="mb-3">Datos del nuevo expediente</h6>
+      <div class="form-group">
+        <label for="fiscalFolder">Carpeta fiscal</label>
+        <input type="text" id="fiscalFolder" class="form-control form-control-sm"
+               formControlName="fiscalFolder">
+      </div>
+      <div class="form-group">
+        <label for="openingDate">Fecha de apertura</label>
+        <input type="date" id="openingDate" class="form-control form-control-sm" formControlName="openingDate">
+      </div>
+      <div class="form-group">
+        <label for="proceduralDeadline">Días de plazo</label>
+        <input type="number" id="proceduralDeadline" class="form-control form-control-sm"
+               formControlName="proceduralDeadline">
+      </div>
+
+      <div class="form-group">
+        <label for="prosecutorId">Fiscal a cargo</label>
+        <select id="prosecutorId" class="form-control form-control-sm" (change)="getProsecutor($event.target)">
+          <option selected>Seleccionar</option>
+          <option *ngFor="let p of prosecutors" value="{{p.name}}">{{p.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="assistantProsecutorId">Asistente fiscal</label>
+        <select id="assistantProsecutorId" class="form-control form-control-sm"
+                (change)="getAssistantProsecutor($event.target)">
+          <option selected>Seleccionar</option>
+          <option *ngFor="let p of assistants" value="{{p.name}}">{{p.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="crime">Delito</label>
+        <input type="text" id="crime" class="form-control form-control-sm" formControlName="crime">
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <h6 class="mb-3">&nbsp;</h6>
+
+      <div class="form-group">
+        <label for="accused">Imputado</label>
+        <input type="text" id="accused" class="form-control form-control-sm" formControlName="accused">
+      </div>
+
+      <div class="form-group">
+        <label for="aggrieved">Agraviado</label>
+        <input type="text" id="aggrieved" class="form-control form-control-sm" formControlName="aggrieved">
+      </div>
+
+      <div class="form-group">
+        <label for="proceduralStage">Etapa procesal</label>
+        <input type="text" id="proceduralStage" class="form-control form-control-sm"
+               formControlName="proceduralStage">
+      </div>
+
+      <div class="form-group">
+        <label for="court">Juzgado</label>
+        <input type="text" id="court" class="form-control form-control-sm" formControlName="court">
+      </div>
+
+      <div class="form-group">
+        <label for="fileNumber">Número de expediente</label>
+        <input type="text" id="fileNumber" class="form-control form-control-sm" formControlName="fileNumber">
+      </div>
+
+      <div class="form-group">
+        <label for="processStatus">Estado del proceso</label>
+        <input type="text" id="processStatus" class="form-control form-control-sm"
+               formControlName="processStatus">
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <h6 class="mb-3">&nbsp;</h6>
+
+      <div class="form-group">
+        <label for="pendingAction">Actuación pendiente</label>
+        <textarea style="height: 100px" id="pendingAction" class="form-control form-control-sm"
+                  formControlName="pendingAction"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="typeDiligence">Tipo de diligencia</label>
+        <input type="text" id="typeDiligence" class="form-control form-control-sm"
+               formControlName="typeDiligence">
+      </div>
+
+      <div class="form-group">
+        <label for="dateNotification">Fecha de notificación</label>
+        <input type="date" id="dateNotification" class="form-control form-control-sm"
+               formControlName="dateNotification">
+      </div>
+
+
+    </div>
+    <div class="col-md-3">
+      <h6 class="mb-3">Datos de la audiencia</h6>
+
+      <div class="form-group">
+
+        <ng-container *ngIf="prosecutor === ''; else show">
+          <label for="noShow">Fiscal a cargo</label>
+          <input type="text" id="noShow" class="form-control form-control-sm" value="Seleccione fiscal"
+                 disabled>
+        </ng-container>
+
+        <ng-template #show>
+          <label for="show">Fiscal a cargo</label>
+          <input type="text" id="show" class="form-control form-control-sm" value="{{ prosecutor }}" disabled>
+        </ng-template>
+
+      </div>
+
+      <div class="form-group">
+        <label for="hearingDate">Fecha</label>
+        <input type="date" id="hearingDate" class="form-control form-control-sm" formControlName="hearingDate">
+      </div>
+
+      <div class="form-group">
+        <label for="hearingTime">Hora</label>
+        <input type="time" id="hearingTime" class="form-control form-control-sm" formControlName="hearingTime">
+      </div>
+
+      <div class="form-group">
+        <label for="hearingLink">Enlace / Link virtual</label>
+        <input type="text" id="hearingLink" class="form-control form-control-sm" formControlName="hearingLink">
+      </div>
+
+      <br>
+      <h5 class="mb-3">Archivo expediente</h5>
+
+      <div class="form-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="customFileLang" lang="es"
+                 (change)="getFileUpload($event)">
+          <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+        </div>
+      </div>
+
+      <ng-container *ngIf="uploadPercent | async as percent">
+        <div class="form-group">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" attr.style="width: {{percent}}%;"
+                 attr.aria-valuenow="{{percent}}" attr.aria-valuemin="0"
+                 attr.aria-valuemax="100">{{percent}}%
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar Expediente</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</form>
