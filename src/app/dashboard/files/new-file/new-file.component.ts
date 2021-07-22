@@ -14,10 +14,9 @@ import {Event} from "../../../interfaces/event";
   styleUrls: ['./new-file.component.scss']
 })
 export class NewFileComponent implements OnInit {
-
   @Input() user = {} as User;
-  fileForm: FormGroup;
-  date = new Date();
+  newFileForm: FormGroup;
+  today = new Date();
   saveSuccess = false;
 
   prosecutor = '';
@@ -25,6 +24,7 @@ export class NewFileComponent implements OnInit {
   uploadPercent: Observable<number> | any;
   fileUpload: Observable<string> | any;
   fileName = '';
+
   prosecutors = [
     {name: 'SACK RAMOS SYLVIA JACQUELINE', charge: 'FISCAL PROVINCIAL'},
     {name: 'ORTIZ GARCIA MARIA DEL CARMEN', charge: 'FISCAL ADJUNTA'},
@@ -47,7 +47,7 @@ export class NewFileComponent implements OnInit {
   ];
 
   constructor(private fb: FormBuilder, private fileSvc: FileService, private storage: AngularFireStorage, private eventSvc: EventService) {
-    this.fileForm = this.fb.group({
+    this.newFileForm = this.fb.group({
       fiscalFolder: [''],
       openingDate: [''],
       proceduralDeadline: [''],
@@ -91,14 +91,14 @@ export class NewFileComponent implements OnInit {
     const event: any = [] as Event[];
     const eventId = event?.id || null;
 
-    if (this.fileForm.valid) {
-      const file = this.fileForm.value;
+    if (this.newFileForm.valid) {
+      const file = this.newFileForm.value;
       const fileId = file?.id || null;
       file.userId = userId;
       file.userDisplayName = userDisplayName;
       file.userPhotoURL = userPhotoURL;
       file.userEmail = userEmail;
-      file.createdAt = this.date;
+      file.createdAt = this.today;
       file.prosecutor = this.prosecutor;
       file.assistantProsecutor = this.assistantProsecutor;
       file.openingDate = new Date(file.openingDate + 'T00:00:00');
@@ -110,17 +110,14 @@ export class NewFileComponent implements OnInit {
       event.userDisplayName = userDisplayName;
       event.userPhotoURL = userPhotoURL;
       event.userEmail = userEmail;
-      event.createdAt = this.date;
+      event.createdAt = this.today;
       event.nameEvent = 'Reunion: del expediente: ' + file.fileNumber;
       event.linkEvent = file.hearingLink;
       file.fileUrl = this.fileName;
       this.fileSvc.saveFile(file, fileId).then(r => r).catch(error => console.log(error));
       this.eventSvc.saveEvent(event, eventId).then(r => r).catch(error => console.log(error));
       this.saveSuccess = true;
-      this.fileForm.reset();
-
+      this.newFileForm.reset();
     }
-    this.fileForm.reset();
   }
-
 }

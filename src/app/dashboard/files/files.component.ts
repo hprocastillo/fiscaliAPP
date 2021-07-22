@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
-import {Observable} from "rxjs";
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -9,27 +8,27 @@ import * as XLSX from 'xlsx';
 	styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit {
-	public user$: Observable<any> = this.authSvc.afAuth.user;
-	list = true;
-	form = false;
-	fileExcelName = 'listado-expedientes.xlsx';
+
+	appList = false;
+	appForm = true;
+	fileExcelName = 'Expedientes.xlsx';
 	showType = '0';
 	searchText: string | any;
 
-	constructor(private authSvc: AuthService) {
+	constructor(public authSvc: AuthService) {
 	}
 
 	ngOnInit(): void {
 	}
 
 	showForm() {
-		this.list = false;
-		this.form = true;
+		this.appList = false;
+		this.appForm = true;
 	}
 
 	showList() {
-		this.list = true;
-		this.form = false;
+		this.appList = true;
+		this.appForm = false;
 	}
 
 	exportList(): void {

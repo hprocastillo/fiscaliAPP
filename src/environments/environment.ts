@@ -1,15 +1,12 @@
 export const environment = {
 	production: false,
-	firebaseConfig: {
-		apiKey: "AIzaSyBGyG-QqdOfkA8JN8C2antCbTabxsNX-wc",
-		authDomain: "fiscaliasystem.firebaseapp.com",
-		projectId: "fiscaliasystem",
-		storageBucket: "fiscaliasystem.appspot.com",
-		messagingSenderId: "830058865162",
-		appId: "1:830058865162:web:02ca924909ff00c14275f3",
-		measurementId: "G-NJFV6GYQGZ",
-		clientId: '830058865162-8ijdghojpsag153kevkni6o9cdn3shvi.apps.googleusercontent.com',
-		discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-		scope: 'https://www.googleapis.com/auth/calendar'
-	}
+  firebaseConfig: {
+    apiKey: "AIzaSyDkx9P2CfbLK01OZATB4wuB12mSyfhMdK8",
+    authDomain: "fiscaliaapp-b3eb6.firebaseapp.com",
+    projectId: "fiscaliaapp-b3eb6",
+    storageBucket: "fiscaliaapp-b3eb6.appspot.com",
+    messagingSenderId: "723017529987",
+    appId: "1:723017529987:web:a47ffea4fea4279d9e39b6",
+    measurementId: "G-9CV3J5P5XW"
+  }
 };
